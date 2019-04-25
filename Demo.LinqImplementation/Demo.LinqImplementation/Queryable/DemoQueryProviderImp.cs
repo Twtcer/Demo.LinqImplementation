@@ -16,11 +16,6 @@ namespace Demo.LinqImplementation
 
         public IQueryable CreateQuery(Expression expression)
         {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
-        {
             var elementType = expression.Type.GetSequenceElementType();
 
             try
@@ -33,14 +28,37 @@ namespace Demo.LinqImplementation
             }
         }
 
+        public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
+        {
+            return new DemoQueryableImp<TElement>(this, expression);
+        }
+
         public object Execute(Expression expression)
         {
-            throw new NotImplementedException();
+            var executionPlan = ExecutionPlanBuilder.BuildPlan(Expression.Constant(this), Translate(expression));
+
+            var lambda = Expression.Lambda(executionPlan);
+            try
+            {
+                return lambda.Compile().DynamicInvoke(null);
+            }
+            catch (TargetInvocationException tie)
+            {
+                throw tie.InnerException;
+            }
+            //return DemoModel.GetDemoModelsByCondition(expression);
         }
 
         public TResult Execute<TResult>(Expression expression)
         {
-            throw new NotImplementedException();
+            var result = Execute(expression);
+            return (TResult)result;
+        }
+
+        private QueryableTranslation Translate(Expression expression)
+        {
+            var pipelineExpression = Prepare(expression);
+            return QueryableTranslator.Translate(pipelineExpression, _collection.Settings.SerializerRegistry, _options.TranslationOptions);
         }
     }
 }

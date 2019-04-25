@@ -14,7 +14,8 @@ namespace Test.Demo.LinqImplementation
         {
             IDemoCollection<DemoModel> collection = new DemoCollection<DemoModel>();
             var query = collection.AsQueryable();
-            query = query.Where(t => t.Age < 999888);
+            query = query.Where(t => t.Age < 555);
+            query = query.Where(t => t.Age > 333);
             var list = query.ToList();
         }
     }
