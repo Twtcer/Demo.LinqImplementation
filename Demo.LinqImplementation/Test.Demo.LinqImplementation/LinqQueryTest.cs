@@ -16,7 +16,14 @@ namespace Test.Demo.LinqImplementation
             var query = collection.AsQueryable();
             query = query.Where(t => t.Age < 555);
             query = query.Where(t => t.Age > 333);
-            var list = query.ToList();
+            var result = query.Select(t => t.Age).ToList().FirstOrDefault();
+
+            /**
+             * 结论：
+             * 通过实现IQueryable的几个类型，在ToList方法会调用该类型的方法
+             * 可以通过单元测试调试了解整个过程
+             * 2019年4月26日15点58分
+             * */
         }
     }
 }

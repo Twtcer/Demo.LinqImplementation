@@ -35,17 +35,8 @@ namespace Demo.LinqImplementation
 
         public object Execute(Expression expression)
         {
-            var executionPlan = ExecutionPlanBuilder.BuildPlan(Expression.Constant(this), Translate(expression));
-
-            var lambda = Expression.Lambda(executionPlan);
-            try
-            {
-                return lambda.Compile().DynamicInvoke(null);
-            }
-            catch (TargetInvocationException tie)
-            {
-                throw tie.InnerException;
-            }
+            //这里解析expression获取到数据
+            return null;
             //return DemoModel.GetDemoModelsByCondition(expression);
         }
 
@@ -53,12 +44,6 @@ namespace Demo.LinqImplementation
         {
             var result = Execute(expression);
             return (TResult)result;
-        }
-
-        private QueryableTranslation Translate(Expression expression)
-        {
-            var pipelineExpression = Prepare(expression);
-            return QueryableTranslator.Translate(pipelineExpression, _collection.Settings.SerializerRegistry, _options.TranslationOptions);
         }
     }
 }
