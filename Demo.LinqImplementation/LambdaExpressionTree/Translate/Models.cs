@@ -46,7 +46,7 @@ namespace LambdaExpressionTree.Translate
         protected QueryProvider QueryProvider { get; set; }
         protected DbContext()
         {
-            Connection = new MySql.Data.MySqlClient.MySqlConnection("server=47.95.210.212;Port=39901;database=SevenTinyTest;uid=root;pwd=CYj(9yyz*8;Allow User Variables=true;SslMode=none;");
+            Connection = new MySql.Data.MySqlClient.MySqlConnection(Consts.Conn);
             QueryProvider = new DbSetQueryProvider(Connection);
         }
 
