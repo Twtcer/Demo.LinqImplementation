@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using JetBrains.Annotations;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.EntityFrameworkCore.Internal
@@ -45,7 +44,7 @@ namespace Microsoft.EntityFrameworkCore.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        //public static bool IsDefaultValue([NotNull] this Type type, [CanBeNull] object value)
+        //public static bool IsDefaultValue(this Type type, [CanBeNull] object value)
         //    => (value?.Equals(type.GetDefaultValue()) != false);
 
         /// <summary>
@@ -54,7 +53,7 @@ namespace Microsoft.EntityFrameworkCore.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public static string DisplayName([NotNull] this Type type, bool fullName = true)
+        public static string DisplayName(this Type type, bool fullName = true)
         {
             var stringBuilder = new StringBuilder();
             ProcessType(stringBuilder, type, fullName);
@@ -153,7 +152,7 @@ namespace Microsoft.EntityFrameworkCore.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public static FieldInfo GetFieldInfo([NotNull] this Type type, [NotNull] string fieldName)
+        public static FieldInfo GetFieldInfo(this Type type, string fieldName)
             => type.GetRuntimeFields().FirstOrDefault(f => f.Name == fieldName && !f.IsStatic);
 
         /// <summary>
@@ -162,7 +161,7 @@ namespace Microsoft.EntityFrameworkCore.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public static IEnumerable<string> GetNamespaces([NotNull] this Type type)
+        public static IEnumerable<string> GetNamespaces(this Type type)
         {
             if (_builtInTypeNames.ContainsKey(type))
             {

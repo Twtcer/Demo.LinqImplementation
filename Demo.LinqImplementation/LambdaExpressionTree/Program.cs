@@ -41,7 +41,8 @@ namespace LambdaExpressionTree
         {
             using (NorthwindDbContext db = new NorthwindDbContext())
             {
-                IQueryable<OperateTest> query = db.OperateTests.Where(c => c.IntKey < 30).Where(t => t.IntKey > 20);
+                IQueryable<OperateTest> query = db.OperateTests.Where(c => c.IntKey < 30);
+                //IQueryable<OperateTest> query = db.OperateTests.Where(c => c.IntKey < 30).Where(t => t.IntKey > 20);
 
                 //var sql = query.ToString();
 

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using JetBrains.Annotations;
 
 namespace Microsoft.EntityFrameworkCore.Internal
 {
@@ -44,7 +43,7 @@ namespace Microsoft.EntityFrameworkCore.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public IndentedStringBuilder([NotNull] IndentedStringBuilder from)
+        public IndentedStringBuilder(IndentedStringBuilder from)
         {
             _indent = from._indent;
         }
@@ -63,7 +62,7 @@ namespace Microsoft.EntityFrameworkCore.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public virtual IndentedStringBuilder Append([NotNull] object o)
+        public virtual IndentedStringBuilder Append(object o)
         {
             DoIndent();
 
@@ -91,7 +90,7 @@ namespace Microsoft.EntityFrameworkCore.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public virtual IndentedStringBuilder AppendLine([NotNull] object o)
+        public virtual IndentedStringBuilder AppendLine(object o)
         {
             var value = o.ToString();
 
@@ -113,7 +112,7 @@ namespace Microsoft.EntityFrameworkCore.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public virtual IndentedStringBuilder AppendLines([NotNull] object o, bool skipFinalNewline = false)
+        public virtual IndentedStringBuilder AppendLines(object o, bool skipFinalNewline = false)
         {
             using (var reader = new StringReader(o.ToString()))
             {

@@ -8,7 +8,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using JetBrains.Annotations;
 //using Microsoft.EntityFrameworkCore.Diagnostics;
 //using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -33,7 +32,7 @@ namespace Microsoft.EntityFrameworkCore.Query.Internal
         /// </summary>
         /// <param name="type"> The type. </param>
         /// <returns> The human-readable name. </returns>
-        public static string ShortDisplayName([NotNull] this Type type)
+        public static string ShortDisplayName(this Type type)
             => type.DisplayName(fullName: false);
     }
     /// <summary>
@@ -150,11 +149,11 @@ namespace Microsoft.EntityFrameworkCore.Query.Internal
             }
         }
 
-        private void Append([NotNull] string message) => _stringBuilder.Append(message);
+        private void Append(string message) => _stringBuilder.Append(message);
 
-        private void Append([NotNull] int value) => _stringBuilder.Append(value);
+        private void Append(int value) => _stringBuilder.Append(value);
 
-        private void AppendLine([NotNull] string message = "")
+        private void AppendLine(string message = "")
         {
             if (RemoveFormatting)
             {
@@ -1061,7 +1060,7 @@ namespace Microsoft.EntityFrameworkCore.Query.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        protected virtual string PostProcess([NotNull] string queryPlan)
+        protected virtual string PostProcess(string queryPlan)
         {
             var processedPlan = queryPlan
                 .Replace("Microsoft.EntityFrameworkCore.Query.", "")

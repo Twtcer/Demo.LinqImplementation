@@ -18,16 +18,17 @@ namespace LambdaExpressionTree.Translate
         private const string _WHERE_ = "[_WHERE_]";
         private const string _TABLE_ = "[_TABLE_]";
 
+        /// <summary>
+        /// 类型和别名字典，用于查询中相同类型使用相同的别名
+        /// </summary>
+        private Dictionary<Type, string> _typeAliasDic = new Dictionary<Type, string>();
+
+
         private const int op_where = 2;
 
         private Stack<int> _operateStack = new Stack<int>();
 
         internal QueryTranslator() { }
-
-        //private StringBuilder GetSB()
-        //{
-
-        //}
 
         internal string Translate(Expression expression)
         {
@@ -68,7 +69,7 @@ namespace LambdaExpressionTree.Translate
                 _operateStack.Push(op_where);
 
                 _where.Append(" AND (");
-                this.Visit(m.Arguments[0]);
+                this.Visit(m.Arguments[1]);
                 _where.Append(")");
                 LambdaExpression lambda = (LambdaExpression)StripQuotes(m.Arguments[1]);
                 this.Visit(lambda.Body);
@@ -103,14 +104,14 @@ namespace LambdaExpressionTree.Translate
                     this.Visit(u.Operand);
                     break;
                 default:
-                    throw new NotSupportedException(string.Format("The unary operator '{0}' is not supported", u.NodeType));
+                    this.Visit(u.Operand);
+                    break;
             }
             return u;
         }
 
         protected override Expression VisitBinary(BinaryExpression b)
         {
-            _execute.Append("(");
             this.Visit(b.Left);
             switch (b.NodeType)
             {
